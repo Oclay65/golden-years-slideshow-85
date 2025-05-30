@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, Maximize, Minimize } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Slideshow = () => {
@@ -55,11 +56,52 @@ const Slideshow = () => {
     {
       src: '/lovable-uploads/247d46d7-d48f-4466-b281-a8c428d426f7.png',
       caption: 'Unexpected reunions - the joy of reconnecting with classmates'
+    },
+    {
+      src: '/lovable-uploads/4f9ba17f-9c15-44ce-a42a-3442a622ae4e.png',
+      caption: 'Class of 1985 celebration cakes - marking 39 years together'
+    },
+    {
+      src: '/lovable-uploads/3e757bcf-15ed-42ee-adef-6d1ecc5a6616.png',
+      caption: 'Happy 55th Birthday celebration - still celebrating together'
+    },
+    {
+      src: '/lovable-uploads/846fd208-4120-4382-b896-12d0478fa611.png',
+      caption: 'Elegant moments - dressed up and feeling great'
+    },
+    {
+      src: '/lovable-uploads/1815a0d3-430e-40c8-9fe0-3630719c1ab4.png',
+      caption: 'Dancing with style - keeping the party alive'
+    },
+    {
+      src: '/lovable-uploads/116c5d82-195b-499e-ab3d-98c1a4902638.png',
+      caption: 'Seated together - sharing memories and catching up'
+    },
+    {
+      src: '/lovable-uploads/4811af3e-9231-42e9-85f3-00437e27db53.png',
+      caption: 'Victory celebration - class spirit never dies'
+    },
+    {
+      src: '/lovable-uploads/1a6d9e9a-3380-49d3-99c7-7d9bdd474b58.png',
+      caption: 'DJ booth fun - keeping the music and energy flowing'
+    },
+    {
+      src: '/lovable-uploads/8c7de5f7-ef6c-4d47-9ece-5bb13aa50d8f.png',
+      caption: 'Sweet embrace - 55th birthday love and friendship'
+    },
+    {
+      src: '/lovable-uploads/a7912338-536c-4290-8588-c5ef8e9607c9.png',
+      caption: 'Purple and gold pride - Archer High School Class of 1985'
+    },
+    {
+      src: '/lovable-uploads/a474238b-4e1c-4986-b7b6-fbd1ae141835.png',
+      caption: 'Dance floor energy - the Class of 1985 still knows how to party'
     }
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -73,6 +115,15 @@ const Slideshow = () => {
     return () => clearInterval(interval);
   }, [isPlaying, images.length]);
 
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
   const goToPrevious = () => {
     setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1);
   };
@@ -85,11 +136,25 @@ const Slideshow = () => {
     setIsPlaying(!isPlaying);
   };
 
+  const toggleFullscreen = async () => {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen();
+    } else {
+      await document.exitFullscreen();
+    }
+  };
+
+  const containerClasses = isFullscreen 
+    ? "fixed inset-0 z-50 bg-black"
+    : "max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden";
+
+  const imageHeight = isFullscreen ? "h-screen" : "h-[600px]";
+
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+    <div className={containerClasses}>
       <div className="relative">
         {/* Main image display */}
-        <div className="relative h-[600px] overflow-hidden">
+        <div className={`relative ${imageHeight} overflow-hidden`}>
           {images.map((image, index) => (
             <div
               key={index}
@@ -102,7 +167,8 @@ const Slideshow = () => {
               <img
                 src={image.src}
                 alt={image.caption}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain bg-black"
+                style={{ objectPosition: 'center center' }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
@@ -128,15 +194,26 @@ const Slideshow = () => {
           <ChevronRight className="h-8 w-8" />
         </Button>
 
-        {/* Play/Pause button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
-          onClick={togglePlayPause}
-        >
-          {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
-        </Button>
+        {/* Control buttons */}
+        <div className="absolute top-4 right-4 flex space-x-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
+            onClick={togglePlayPause}
+          >
+            {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="icon"
+            className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
+            onClick={toggleFullscreen}
+          >
+            {isFullscreen ? <Minimize className="h-6 w-6" /> : <Maximize className="h-6 w-6" />}
+          </Button>
+        </div>
 
         {/* Caption */}
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
@@ -146,28 +223,30 @@ const Slideshow = () => {
         </div>
       </div>
 
-      {/* Thumbnail navigation */}
-      <div className="p-6 bg-gray-50">
-        <div className="flex justify-center space-x-3 flex-wrap gap-y-2">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                index === currentIndex
-                  ? 'bg-rose-500 scale-125'
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-              onClick={() => setCurrentIndex(index)}
-            />
-          ))}
+      {/* Thumbnail navigation - hidden in fullscreen */}
+      {!isFullscreen && (
+        <div className="p-6 bg-gray-50">
+          <div className="flex justify-center space-x-3 flex-wrap gap-y-2">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? 'bg-rose-500 scale-125'
+                    : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+                onClick={() => setCurrentIndex(index)}
+              />
+            ))}
+          </div>
+          
+          <div className="mt-4 text-center">
+            <p className="text-gray-600">
+              {currentIndex + 1} of {images.length}
+            </p>
+          </div>
         </div>
-        
-        <div className="mt-4 text-center">
-          <p className="text-gray-600">
-            {currentIndex + 1} of {images.length}
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
