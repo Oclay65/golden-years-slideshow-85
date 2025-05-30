@@ -131,6 +131,20 @@ const Slideshow = () => {
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') goToPrevious();
+      if (e.key === 'ArrowRight') goToNext();
+      if (e.key === ' ') {
+        e.preventDefault();
+        togglePlayPause();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const goToPrevious = () => {
     setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1);
   };
@@ -153,7 +167,7 @@ const Slideshow = () => {
 
   const containerClasses = isFullscreen 
     ? "fixed inset-0 z-50 bg-black"
-    : "max-w-4xl mx-auto bg-purple-900 rounded-2xl shadow-2xl overflow-hidden";
+    : "max-w-4xl mx-auto bg-purple-900/80 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-sm border border-purple-700";
 
   const imageHeight = isFullscreen ? "h-screen" : "h-[600px]";
 
@@ -176,7 +190,7 @@ const Slideshow = () => {
                 className="w-full h-full object-contain bg-black"
                 style={{ objectPosition: 'center center' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
           ))}
         </div>
@@ -184,8 +198,9 @@ const Slideshow = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-100 backdrop-blur-sm"
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-yellow-400/20 hover:bg-yellow-400/40 text-yellow-100 backdrop-blur-sm ring-1 ring-yellow-400/30"
           onClick={goToPrevious}
+          aria-label="Previous image"
         >
           <ChevronLeft className="h-8 w-8" />
         </Button>
@@ -193,8 +208,9 @@ const Slideshow = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-100 backdrop-blur-sm"
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-yellow-400/20 hover:bg-yellow-400/40 text-yellow-100 backdrop-blur-sm ring-1 ring-yellow-400/30"
           onClick={goToNext}
+          aria-label="Next image"
         >
           <ChevronRight className="h-8 w-8" />
         </Button>
@@ -203,8 +219,9 @@ const Slideshow = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-100 backdrop-blur-sm"
+            className="bg-yellow-400/20 hover:bg-yellow-400/40 text-yellow-100 backdrop-blur-sm ring-1 ring-yellow-400/30"
             onClick={togglePlayPause}
+            aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
           >
             {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
           </Button>
@@ -212,32 +229,34 @@ const Slideshow = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-100 backdrop-blur-sm"
+            className="bg-yellow-400/20 hover:bg-yellow-400/40 text-yellow-100 backdrop-blur-sm ring-1 ring-yellow-400/30"
             onClick={toggleFullscreen}
+            aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
           >
             {isFullscreen ? <Minimize className="h-6 w-6" /> : <Maximize className="h-6 w-6" />}
           </Button>
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-          <p className="text-yellow-200 text-xl font-medium text-center">
+          <p className="text-yellow-200 text-xl font-medium text-center animate-fade-in">
             {images[currentIndex].caption}
           </p>
         </div>
       </div>
 
       {!isFullscreen && (
-        <div className="p-6 bg-purple-950">
+        <div className="p-6 bg-purple-950/80 backdrop-blur-sm border-t border-purple-700">
           <div className="flex justify-center space-x-3 flex-wrap gap-y-2">
             {images.map((_, index) => (
               <button
                 key={index}
                 className={`w-4 h-4 rounded-full transition-all duration-300 ${
                   index === currentIndex
-                    ? 'bg-yellow-400 scale-125'
+                    ? 'bg-yellow-400 scale-125 ring-2 ring-yellow-400/50'
                     : 'bg-yellow-400/30 hover:bg-yellow-400/50'
                 }`}
                 onClick={() => setCurrentIndex(index)}
+                aria-label={`Go to image ${index + 1}`}
               />
             ))}
           </div>
