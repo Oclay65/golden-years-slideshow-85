@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Play, Pause, Maximize, Minimize } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -96,6 +95,14 @@ const Slideshow = () => {
     {
       src: '/lovable-uploads/a474238b-4e1c-4986-b7b6-fbd1ae141835.png',
       caption: 'Dance floor energy - the Class of 1985 still knows how to party'
+    },
+    {
+      src: '/lovable-uploads/_60A4709.png',
+      caption: 'Celebrating lifelong bonds and friendships'
+    },
+    {
+      src: '/lovable-uploads/_60A4708.png',
+      caption: 'Joy and laughter - memories that last forever'
     }
   ];
 
@@ -146,14 +153,13 @@ const Slideshow = () => {
 
   const containerClasses = isFullscreen 
     ? "fixed inset-0 z-50 bg-black"
-    : "max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden";
+    : "max-w-4xl mx-auto bg-purple-900 rounded-2xl shadow-2xl overflow-hidden";
 
   const imageHeight = isFullscreen ? "h-screen" : "h-[600px]";
 
   return (
     <div className={containerClasses}>
       <div className="relative">
-        {/* Main image display */}
         <div className={`relative ${imageHeight} overflow-hidden`}>
           {images.map((image, index) => (
             <div
@@ -175,11 +181,10 @@ const Slideshow = () => {
           ))}
         </div>
 
-        {/* Navigation arrows */}
         <Button
           variant="ghost"
           size="icon"
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-100 backdrop-blur-sm"
           onClick={goToPrevious}
         >
           <ChevronLeft className="h-8 w-8" />
@@ -188,18 +193,17 @@ const Slideshow = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-100 backdrop-blur-sm"
           onClick={goToNext}
         >
           <ChevronRight className="h-8 w-8" />
         </Button>
 
-        {/* Control buttons */}
         <div className="absolute top-4 right-4 flex space-x-2">
           <Button
             variant="ghost"
             size="icon"
-            className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
+            className="bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-100 backdrop-blur-sm"
             onClick={togglePlayPause}
           >
             {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
@@ -208,32 +212,30 @@ const Slideshow = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
+            className="bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-100 backdrop-blur-sm"
             onClick={toggleFullscreen}
           >
             {isFullscreen ? <Minimize className="h-6 w-6" /> : <Maximize className="h-6 w-6" />}
           </Button>
         </div>
 
-        {/* Caption */}
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-          <p className="text-white text-xl font-medium text-center">
+          <p className="text-yellow-200 text-xl font-medium text-center">
             {images[currentIndex].caption}
           </p>
         </div>
       </div>
 
-      {/* Thumbnail navigation - hidden in fullscreen */}
       {!isFullscreen && (
-        <div className="p-6 bg-gray-50">
+        <div className="p-6 bg-purple-950">
           <div className="flex justify-center space-x-3 flex-wrap gap-y-2">
             {images.map((_, index) => (
               <button
                 key={index}
                 className={`w-4 h-4 rounded-full transition-all duration-300 ${
                   index === currentIndex
-                    ? 'bg-rose-500 scale-125'
-                    : 'bg-gray-300 hover:bg-gray-400'
+                    ? 'bg-yellow-400 scale-125'
+                    : 'bg-yellow-400/30 hover:bg-yellow-400/50'
                 }`}
                 onClick={() => setCurrentIndex(index)}
               />
@@ -241,7 +243,7 @@ const Slideshow = () => {
           </div>
           
           <div className="mt-4 text-center">
-            <p className="text-gray-600">
+            <p className="text-yellow-200">
               {currentIndex + 1} of {images.length}
             </p>
           </div>
