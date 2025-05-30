@@ -9,7 +9,7 @@ const Index = () => {
             Class of 1985
           </h1>
           <h2 className="text-3xl text-yellow-300 mb-2">
-            59th Anniversary Celebration
+            40th Anniversary Celebration
           </h2>
           <p className="text-lg text-yellow-200 italic">
             Celebrating friendship, memories, and togetherness

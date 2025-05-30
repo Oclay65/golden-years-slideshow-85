@@ -22,7 +22,7 @@ const Slideshow = () => {
     },
     {
       src: '/lovable-uploads/7b89d453-797d-45a9-93d0-b22661536fe4.png',
-      caption: 'Dancing and celebrating 59 years of friendship'
+      caption: 'Dancing and celebrating our class reunion'
     },
     {
       src: '/lovable-uploads/fd76bf61-0aea-45a0-b639-cf4038b8fc9c.png',
@@ -58,7 +58,7 @@ const Slideshow = () => {
     },
     {
       src: '/lovable-uploads/4f9ba17f-9c15-44ce-a42a-3442a622ae4e.png',
-      caption: 'Class of 1985 celebration cakes - marking 39 years together'
+      caption: 'Class of 1985 celebration cakes - marking our reunion'
     },
     {
       src: '/lovable-uploads/3e757bcf-15ed-42ee-adef-6d1ecc5a6616.png',
@@ -103,6 +103,26 @@ const Slideshow = () => {
     {
       src: '/lovable-uploads/_60A4708.png',
       caption: 'Joy and laughter - memories that last forever'
+    },
+    {
+      src: '/lovable-uploads/IMG_0082 (2).jpg',
+      caption: 'Class of 1985 reunion - forever connected'
+    },
+    {
+      src: '/lovable-uploads/IMG_0071 (2).jpg',
+      caption: 'Celebrating under the tent - summer reunion fun'
+    },
+    {
+      src: '/lovable-uploads/IMG_0085 (1).jpg',
+      caption: 'Grilling and chilling with classmates'
+    },
+    {
+      src: '/lovable-uploads/IMG_0086 (1).jpg',
+      caption: 'Relaxing and reminiscing with old friends'
+    },
+    {
+      src: '/lovable-uploads/FullSizeR (3).jpg',
+      caption: 'Happy 55th birthday celebration in style'
     }
   ];
 
