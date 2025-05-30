@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -24,6 +23,38 @@ const Slideshow = () => {
     {
       src: '/lovable-uploads/7b89d453-797d-45a9-93d0-b22661536fe4.png',
       caption: 'Dancing and celebrating 59 years of friendship'
+    },
+    {
+      src: '/lovable-uploads/fd76bf61-0aea-45a0-b639-cf4038b8fc9c.png',
+      caption: 'Archer HS Class of 1985 - Together again with endless smiles'
+    },
+    {
+      src: '/lovable-uploads/9830edc8-5761-4a0a-9cde-579b9ca1f146.png',
+      caption: 'Class unity in purple and gold - Archer High School pride'
+    },
+    {
+      src: '/lovable-uploads/958898b9-d557-44a2-89ef-c546da502bef.png',
+      caption: 'Friends celebrating under the tent - Class of \'85 spirit'
+    },
+    {
+      src: '/lovable-uploads/cdea4522-80bf-4fb1-b9ca-e1102106f298.png',
+      caption: 'Playground fun - reliving our youthful energy together'
+    },
+    {
+      src: '/lovable-uploads/4da4106d-a0c6-41f4-b5de-bcf5efdfc408.png',
+      caption: 'Nature backdrop - Class of 1985 in perfect harmony'
+    },
+    {
+      src: '/lovable-uploads/8dab02bf-5e15-4c41-b2b9-61cd423c0057.png',
+      caption: 'Honoring our memories - a beautiful memorial display'
+    },
+    {
+      src: '/lovable-uploads/a727bd97-8dee-4f19-9e39-b7c9206d04bc.png',
+      caption: 'Casual moments and genuine connections'
+    },
+    {
+      src: '/lovable-uploads/247d46d7-d48f-4466-b281-a8c428d426f7.png',
+      caption: 'Unexpected reunions - the joy of reconnecting with classmates'
     }
   ];
 
@@ -117,7 +148,7 @@ const Slideshow = () => {
 
       {/* Thumbnail navigation */}
       <div className="p-6 bg-gray-50">
-        <div className="flex justify-center space-x-3">
+        <div className="flex justify-center space-x-3 flex-wrap gap-y-2">
           {images.map((_, index) => (
             <button
               key={index}
